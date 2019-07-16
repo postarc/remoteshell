@@ -9,6 +9,8 @@ PURPLE="\033[0;35m"
 MAG='\e[1;35m'
 NC='\033[0m'
 
+USERN='root'
+
 echo -n -e "${YELLOW}Input Your Root Password:${NC}"
 read -e PASSWORD
 echo -n -e "${YELLOW}Input The User Name Witch To Run The Script:${NC}"
@@ -17,14 +19,16 @@ read -e UNAME
 #Проверка установлен ли пакет:
 dpkg -s sshpass &>temp.f
 if [[ -z $(cat temp.f | grep Version) ]]; then 
-  sudo apt-get install -y sshpass 2>&1; fi
+  sudo apt-get install -y sshpass > /dev/null 2>&1; fi
 
 #Чтение файла ipserver.list и отправка скриптов:
 for IPSERVER in $(<ipserver.list)
 do
+# sshpass -p "YOUR_PASSWORD" ssh -o StrictHostKeyChecking=no YOUR_USERNAME@SOME_SITE.COM:2400
  
-
-   
+ sshpass -p $PASSWORD ssh -o StrictHostKeyChecking=no $USERN@$IPSERVER
+ ls
+ exit
       
 done 
 rm temp.f
