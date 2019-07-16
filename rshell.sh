@@ -36,7 +36,8 @@ do
  
   sshpass -p $PASSWORD scp $1 $USERN@$IPSERVER:$HOMEFOLDER
   sshpass -p $PASSWORD ssh -o StrictHostKeyChecking=no $USERN@$IPSERVER chown $USERN:$USERN $HOMEFOLDER/$1
-  
+  sshpass -p $PASSWORD ssh -o StrictHostKeyChecking=no $USERN@$IPSERVER bash $HOMEFOLDER/$1
+
 done 
 
 rm -rf remoteshell
