@@ -10,6 +10,7 @@ MAG='\e[1;35m'
 NC='\033[0m'
 
 USERN='root'
+SERVER_LIST='ipserver.list'
 
 if [[ "$USERN" == "root" ]]; then
         HOMEFOLDER="/root"
@@ -17,7 +18,8 @@ if [[ "$USERN" == "root" ]]; then
         HOMEFOLDER="/home/$USERN"
 fi
 
-if [ -z $1 ]; then echo -e "${RED}Nothing to shell. Exit.${NC}"; rm -rf remoteshell; exit; fi
+if [ -z $1 ]; then echo -e "${RED}Nothing to shell. Exit.${NC}"; exit; fi
+if [ ! -f $SERVER_LIST];then echo -e "${RED}File $SERVER_LIST not found${NC}"; fi
 
 echo -n -e "${YELLOW}Input Your Root Password:${NC}"
 read -e PASSWORD
@@ -30,7 +32,7 @@ if [[ -z $(cat temp.f | grep Version) ]]; then
   sudo apt-get install -y sshpass > /dev/null 2>&1; fi
 
 #Чтение файла ipserver.list и отправка скриптов:
-for IPSERVER in $(<ipserver.list)
+for IPSERVER in $(<$SERVER_LIST)
 do
 # sshpass -p "YOUR_PASSWORD" ssh -o StrictHostKeyChecking=no YOUR_USERNAME@SOME_SITE.COM:2400
  
@@ -40,5 +42,5 @@ do
 
 done 
 
-rm -rf remoteshell
+#rm -rf remoteshell
 rm temp.f
