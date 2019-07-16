@@ -11,6 +11,14 @@ NC='\033[0m'
 
 USERN='root'
 
+if [[ "$USERN" == "root" ]]; then
+        HOMEFOLDER="/root"
+ else
+        HOMEFOLDER="/home/$USERN"
+fi
+
+if [ -z $1 ]; then echo -e "${RED}Nothing to shell. Exit.${NC}"; fi
+
 echo -n -e "${YELLOW}Input Your Root Password:${NC}"
 read -e PASSWORD
 echo -n -e "${YELLOW}Input The User Name Witch To Run The Script:${NC}"
@@ -26,9 +34,10 @@ for IPSERVER in $(<ipserver.list)
 do
 # sshpass -p "YOUR_PASSWORD" ssh -o StrictHostKeyChecking=no YOUR_USERNAME@SOME_SITE.COM:2400
  
- sshpass -p $PASSWORD ssh -o StrictHostKeyChecking=no $USERN@$IPSERVER
- ls
- exit
-      
+  sshpass -p $PASSWORD scp $1 $USERN@$IPSERVER:$HOMEFOLDER
+  sshpass -p $PASSWORD ssh -o StrictHostKeyChecking=no $USERN@$IPSERVER chown $USERN:$USERN $HOMEFOLDER/$1
+  
 done 
+
+rm -rf remoteshell
 rm temp.f
