@@ -17,7 +17,7 @@ if [[ "$USERN" == "root" ]]; then
         HOMEFOLDER="/home/$USERN"
 fi
 
-if [ -z $1 ]; then echo -e "${RED}Nothing to shell. Exit.${NC}"; exit; fi
+if [ -z $1 ]; then echo -e "${RED}Nothing to shell. Exit.${NC}"; rm -rf remoteshell; exit; fi
 
 echo -n -e "${YELLOW}Input Your Root Password:${NC}"
 read -e PASSWORD
