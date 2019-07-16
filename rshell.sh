@@ -19,7 +19,7 @@ if [[ "$USERN" == "root" ]]; then
 fi
 
 if [ -z $1 ]; then echo -e "${RED}Nothing to shell. Exit.${NC}"; exit; fi
-if [ ! [-f $SERVER_LIST]];then echo -e "${RED}File $SERVER_LIST not found${NC}"; fi
+if [ ! [-f $SERVER_LIST]];then echo -e "${RED}File $SERVER_LIST not found${NC}"; exit; fi
 
 echo -n -e "${YELLOW}Input Your Root Password:${NC}"
 read -e PASSWORD
